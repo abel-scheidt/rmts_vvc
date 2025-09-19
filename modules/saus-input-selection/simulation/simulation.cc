@@ -34,10 +34,12 @@ array<int, 32> t2s(array<int, 32> &input_vector, int N) {
 array<int, 32> decompose(array<int, 32> input_vector, int N) {
     for (int depth = N; depth >= 4; depth /= 2) {
         for (int pos = 0; pos < depth; pos += 4) {
-            input_vector[pos] = input_vector[pos] + input_vector[pos+3];
-            input_vector[pos+1] = input_vector[pos+1] + input_vector[pos+2];
-            input_vector[pos+2] = input_vector[pos+1] - input_vector[pos+2];
-            input_vector[pos+3] = input_vector[pos] - input_vector[pos + 3];
+            array<int, 4> saved_vector;
+            saved_vector[0] = input_vector[pos] + input_vector[pos+3];
+            saved_vector[1] = input_vector[pos+1] + input_vector[pos+2];
+            saved_vector[2] = input_vector[pos+1] - input_vector[pos+2];
+            saved_vector[3] = input_vector[pos] - input_vector[pos+3];
+            for (int i = 0; i < 4; i++) input_vector[pos+i] = saved_vector[i];
         }
         print_vector(input_vector, "Decomposing...");
     }
