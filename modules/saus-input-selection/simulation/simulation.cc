@@ -12,12 +12,11 @@ void print_vector(array<int, 32> &input_vector, string name) {
 }
 
 // Nota: Caso N=4, nao altera o vetor
-// Resolver: N é insuficiente como parâmetro único.
-// O parâmetro depth deve ser utilizado também.
-array<int, 32> t2s(array<int, 32> &input_vector, int N) {
+// Funcionando!
+array<int, 32> t2s(array<int, 32> &input_vector, int N, int depth) {
     array<int, 32> rearranged_vector = input_vector;
 
-    for (int pos = 0; pos < N; pos++) {
+    for (int pos = 0; pos < (32 >> depth); pos++) {
         int R = pos % N;
         int parity = R % 2; // or p % 2
         int new_pos = (pos / N) * N;
@@ -57,7 +56,7 @@ array<int, 32> decompose(array<int, 32> input_vector, int N) {
     for (int depth = 0; depth < max_depth; depth++) {
         cout << "\nDecomposing... Current depth = " << depth << endl;
         print_vector(input_vector, "Raw vector");
-        input_vector = t2s(input_vector, N);
+        input_vector = t2s(input_vector, N, depth);
         print_vector(input_vector, "T2s applied");
 
         for (int pos = 0; pos < (32 / (1 << depth)); pos += 4) {
@@ -70,13 +69,16 @@ array<int, 32> decompose(array<int, 32> input_vector, int N) {
         }
         print_vector(input_vector, "Sums and subtractions applied");
         input_vector = t2s_back(input_vector, 32 >> depth);
-        print_vector(input_vector, "T2s Back applied");
+        print_vector(input_vector, "T2s back applied");
         N /= 2;
     }
 
     return input_vector;
 }
 
+// Decomposição da DCT-II já está funcionando
+// Falta implementar seleção entre as 3 transformadas
+// Dúvida: esse módulo difere a DST-VII da DCT-VIII?
 int main() {
     int N;
     array<int, 32> input_vector, decomposed_vector;
