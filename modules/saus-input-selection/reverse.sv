@@ -2,8 +2,8 @@ module reverse #(
     parameter WIDTH = 16,
     parameter N = 32
 )(
-    input  logic [WIDTH-1:0] input_vector [31:0],
-    output logic [WIDTH-1:0] output_vector [31:0]
+    input  logic signed [WIDTH-1:0] input_vector [31:0],
+    output logic signed [WIDTH-1:0] output_vector [31:0]
 );
     always_comb begin
         int new_pos;
