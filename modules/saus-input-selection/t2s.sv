@@ -8,13 +8,12 @@ module t2s #(
 );
 
 always_comb begin
-        int pos, R, parity, new_pos;
-        
-        for (int i = (32 >> DEPTH); i < 32; i++) begin
-            output_vector[i] = input_vector[i];
+        for (int pos = (32 >> DEPTH); pos < 32; pos++) begin
+            output_vector[pos] = input_vector[pos];
         end
-        
-        for (pos = 0; pos < (32 >> DEPTH); pos++) begin
+
+        int R, parity, new_pos;
+        for (int pos = 0; pos < (32 >> DEPTH); pos++) begin
             R = pos % N;
             parity = R % 2;
             new_pos = (pos / N) * N;
